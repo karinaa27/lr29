@@ -23,13 +23,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        ViewPager pager = findViewById(R.id.pager);
         pager.setAdapter(pagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(pager);
     }
 
@@ -38,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_share);
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        setShareActionIntent("Не хочешь позвать меня на пиццу?");
+        if (shareActionProvider != null) {
+            setShareActionIntent("Не хочешь позвать меня на пиццу?");
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
-        shareActionProvider.setShareIntent(intent);
+        if (shareActionProvider != null) {
+            shareActionProvider.setShareIntent(intent);
+        }
     }
 
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -81,8 +86,9 @@ public class MainActivity extends AppCompatActivity {
                     return new PastaFragment();
                 case 3:
                     return new StoresFragment();
+                default:
+                    return null;
             }
-            return null;
         }
 
         @Override
@@ -96,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
                     return getResources().getText(R.string.pasta_tab);
                 case 3:
                     return getResources().getText(R.string.store_tab);
+                default:
+                    return null;
             }
-            return null;
         }
-
     }
 }

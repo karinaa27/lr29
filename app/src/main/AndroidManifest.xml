@@ -13,6 +13,11 @@
         android:theme="@style/Theme.PizzaandSnacks"
         tools:targetApi="31">
         <activity
+            android:name=".PizzaDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.PizzaandSnacks" />
+        <activity
             android:name=".OrderActivity"
             android:exported="false"
             android:theme="@style/Theme.PizzaandSnacks" />
